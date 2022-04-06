@@ -3,12 +3,15 @@ import java.io.*;
 import java.util.*;
 public class Cordinator{
     public static Map<Integer, ParticipantCl> participants = new HashMap<Integer, ParticipantCl>();
+    public static ArrayList<MessageStore> listy = new ArrayList<MessageStore>(); //arrayList for messageStore objects
+    public static Integer waitTime;
     public static void main(String args[]) throws Exception{
         String path = args[0];
         File config = new File(path);
         Scanner configRead = new Scanner(config);
         Integer serverS = configRead.nextInt();
-        //Integer waitTime = configRead.nextInt();
+        //waitTime = configRead.nextInt();
+        waitTime = 5;
         ServerSocket svr = new ServerSocket(serverS);
         // testing participant code
         //ParticipantCl part1 = new ParticipantCl("hello", 122, sl);
@@ -30,6 +33,8 @@ public class Cordinator{
             System.out.println("this is the ip: "+key);
             Socket socketN = part.socket;
             String parseM;
+            //MessageStore storey = new MessageStore(mString);
+            //listy.add(storey);
             parseM = "THIS MESSAGE FROM SERVER: "+mString;
             DataOutputStream ostream = new DataOutputStream(socketN.getOutputStream());
             ostream.writeUTF(parseM);

@@ -28,6 +28,34 @@ public class ParticipantThread extends Thread{
                 pr.socket = socket;
                 pr.port = socket.getPort();
                 pr.ip = istream.readUTF();
+                
+                long currTime = System.currentTimeMillis();
+                float tempSec = 0;
+                MessageStore temp;
+                long thresh = Long.valueOf(Cordinator.waitTime);
+
+                Stack<String> msgStack = new Stack<String>();
+                int stSize = 0;
+
+                //loop through list/queue starting at beggining or end depending
+                for (int i = Cordinator.listy.size() -1; i > 0; i--) {
+                    temp = Cordinator.listy.get(i);
+                    tempSec = (currTime - temp.timeSent) / 1000F;
+                if (tempSec <= thresh) {
+                    msgStack.push(temp.msgContents);
+                    stSize++;
+                } else {
+                    break;
+                }
+                }//end loop
+                while(stSize > 0) {
+                    ostream.writeUTF(msgStack.peek());
+                    msgStack.pop();
+                    stSize--;
+                }
+
+
+                
             }
             System.out.println(msg);
             String message = "";
@@ -51,6 +79,8 @@ public class ParticipantThread extends Thread{
             }
             if(msg.equals("multicast send")){
                 nextmsg = istream.readUTF();
+                MessageStore storey = new MessageStore(nextmsg);
+                Cordinator.listy.add(storey);
                 Cordinator.multicastSend(nextmsg);
             }
             if(msg.equals("disconnect")){
