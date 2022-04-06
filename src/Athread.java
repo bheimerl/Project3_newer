@@ -52,6 +52,10 @@ public class Athread extends Thread{
                     needReconnect = true;
                     System.out.println("con");
                 }
+                (msg.equals("register")){
+                    dos.writeUTF(ip);
+                    dos.writeUTF(clientID);
+                }
             }
 
         }catch(Exception e){
