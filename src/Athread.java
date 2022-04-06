@@ -54,7 +54,7 @@ public class Athread extends Thread{
                 }
                 (msg.equals("register")){
                     dos.writeUTF(ip);
-                    dos.writeUTF(clientID);
+                    dos.writeUTF(Integer.toString(clientID));
                 }
             }
 
