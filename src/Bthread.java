@@ -26,8 +26,8 @@ public class Bthread extends Thread{
         }
     }
 }*/
-import java.util.;
-import java.io.;
+import java.util.*;
+import java.io.*;
 import java.net.*;
 
 
